@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/jwt_auth
+    username: postgres
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1234567890-abcde12345.apps.googleusercontent.com
+            client-secret: abcdefghijklmnop
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: profile, email
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+jwt:
+  expiration: 2h
+  secret: ${JWT_SECRET:secretary}
+server:
+  port: 8000
