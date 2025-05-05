@@ -1,7 +1,5 @@
 package com.henheang.authhub.payload;
 
-
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,14 +9,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+public class UserResponse {
 
-public class LoginRequest {
+    private Long Id;
 
-    @NotBlank(message = "Username is required")
+    private String name;
+
     private String email;
 
-    @NotBlank(message = "Password is required")
-    private String password;
+    private Boolean emailVerified;
+
+    private String imageUrl;
+
+    private String provider;
+
 
 
 }

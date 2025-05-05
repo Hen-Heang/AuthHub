@@ -1,6 +1,6 @@
 package com.henheang.authhub.controller;
 
 
-public class AuthController {
+public class AuthController extends BaseController{
 
 }
