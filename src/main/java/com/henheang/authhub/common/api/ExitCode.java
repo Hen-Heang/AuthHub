@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ExitCode {
-    SUCCESS(0, "Success"),
+    SUCCESS(200, "Success"),
 
     // Authentication Errors (1000-1099)
     AUTHENTICATION_FAILED(1000, "Authentication failed"),

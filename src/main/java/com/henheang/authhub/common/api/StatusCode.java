@@ -1,5 +1,7 @@
 package com.henheang.authhub.common.api;
 
+import lombok.Getter;
+@Getter
 public enum StatusCode {
 
     SUCCESS(200, "Success", 200),
@@ -234,21 +236,4 @@ public enum StatusCode {
         this.httpCode = httpCode;
     }
 
-    public String getMessage() {
-
-        return this.message;
-
-    }
-
-    public int getCode() {
-
-        return code;
-
-    }
-
-    public int getHttpCode() {
-
-        return httpCode;
-
-    }
 }

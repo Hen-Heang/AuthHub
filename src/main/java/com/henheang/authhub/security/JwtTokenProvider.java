@@ -6,16 +6,15 @@ import com.henheang.authhub.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
@@ -24,16 +23,15 @@ import java.util.Date;
 public class JwtTokenProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
     @Value("${jwt.expiration}")
     private String jwtExpirationString;
 
+    @Autowired
+    private SecretKey jwtSecretKey;
+
     public String generateToken(Authentication authentication) {
         try {
-            com.henheang.authhub.security.UserPrincipal userPrincipal =
-                    (com.henheang.authhub.security.UserPrincipal) authentication.getPrincipal();
+            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
             Instant now = Instant.now();
             Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
@@ -94,13 +92,7 @@ public class JwtTokenProvider {
         }
     }
 
-    private Key getSigningKey() {
-        try {
-            byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
-            return Keys.hmacShaKeyFor(keyBytes);
-        } catch (Exception e) {
-            throw new AuthException(ExitCode.SECURITY_ERROR,
-                    "Invalid JWT secret key: " + e.getMessage());
-        }
+    private SecretKey getSigningKey() {
+        return jwtSecretKey;
     }
 }

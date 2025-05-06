@@ -44,7 +44,7 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> success(T data) {
-        ApiStatus status = new ApiStatus(ExitCode.SUCCESS.getCode(), ExitCode.SUCCESS.getMessage());
+        ApiStatus status = new ApiStatus(StatusCode.SUCCESS);
         return new ApiResponse<>(status, data);
     }
 
