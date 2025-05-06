@@ -63,6 +63,7 @@ public class SecurityConfig {
                         .failureHandler(oAuth2AuthenticationFailureHandler)
                 );
 
+
         // Add JWT filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

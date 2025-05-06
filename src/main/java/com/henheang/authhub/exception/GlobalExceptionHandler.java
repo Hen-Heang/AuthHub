@@ -1,4 +1,3 @@
-// Add GlobalExceptionHandler
 package com.henheang.authhub.exception;
 
 import com.henheang.authhub.common.api.ApiResponse;
@@ -39,6 +38,72 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(StatusCode.UNAUTHORIZED),
+                "Authentication failed: " + ex.getMessage()
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(StatusCode.BAD_CREDENTIAL),
+                "Invalid email or password"
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(StatusCode.FORBIDDEN),
+                "You don't have permission to access this resource"
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(StatusCode.BAD_REQUEST),
+                errors
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Object>> handleGlobalException(Exception ex, WebRequest request) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(StatusCode.BAD_GATEWAY),
+                "An unexpected error occurred: " + ex.getMessage()
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException ex, WebRequest request) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                new ApiStatus(ex.getErrorCode()),
+                ex.getBody() != null ? ex.getBody() : ex.getMessage()
+        );
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(ex.getErrorCode().getHttpCode()));
     }
 }

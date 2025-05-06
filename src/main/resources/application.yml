@@ -29,3 +29,15 @@ jwt:
   secret: ${JWT_SECRET:secretary}
 server:
   port: 8000
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v1/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    use-root-path: true
+  show-actuator: true

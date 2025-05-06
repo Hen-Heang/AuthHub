@@ -20,7 +20,7 @@ public class NewPasswordRequest {
     private String token;
 
     @NotBlank(message = " New Password is required")
-    @Size(min   = 50, max = 50, message = "Email must be 50 characters or less")
+    @Size(min = 8, max = 50, message = "Email must be 50 characters or less")
     private String newPassword;
 
 }
