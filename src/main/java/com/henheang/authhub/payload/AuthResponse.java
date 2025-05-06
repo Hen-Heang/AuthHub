@@ -9,13 +9,21 @@ import lombok.*;
 @AllArgsConstructor
 
 public class AuthResponse {
+
     private String accessToken;
+
+    private String refreshToken;
 
     private String tokenType = "Bearer";
 
+    private Long expiresIn;
+
     @Builder
-    public AuthResponse(String accessToken) {
+    public AuthResponse(String accessToken, String refreshToken, Long expiresIn) {
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.expiresIn = expiresIn;
+
     }
 
 }

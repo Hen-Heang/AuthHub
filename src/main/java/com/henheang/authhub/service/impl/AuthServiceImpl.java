@@ -3,18 +3,22 @@ package com.henheang.authhub.service.impl;
 
 import com.henheang.authhub.common.api.ExitCode;
 import com.henheang.authhub.domain.AuthProvider;
+import com.henheang.authhub.domain.RefreshToken;
 import com.henheang.authhub.domain.Role;
 import com.henheang.authhub.domain.User;
 import com.henheang.authhub.exception.AuthException;
+import com.henheang.authhub.payload.AuthResponse;
 import com.henheang.authhub.payload.LoginRequest;
 import com.henheang.authhub.payload.SignUpRequest;
 import com.henheang.authhub.repository.UserRepository;
 import com.henheang.authhub.security.JwtTokenProvider;
 import com.henheang.authhub.service.AuthService;
+import com.henheang.authhub.service.RefreshTokenService;
 import com.henheang.authhub.service.RoleService;
 import com.henheang.authhub.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +39,14 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final RefreshTokenService refreshTokenService;
+
+    @Value("${jwt.refresh-token.expiration}")
+    private String refreshTokenExpirationString;
 
     @Override
     @Transactional
-    public User signup(SignUpRequest signUpRequest) {
+    public Object signup(SignUpRequest signUpRequest) {
         // Check if email already exists
         if (userService.existsByEmail(signUpRequest.getEmail())) {
             throw new AuthException(ExitCode.EMAIL_ALREADY_EXISTS);
@@ -55,7 +65,18 @@ public class AuthServiceImpl implements AuthService {
         user.addRole(role);
 
         try {
-            return userService.saveUser(user);
+            User savedUser = userService.saveUser(user);
+            // Generate JWT token
+            String token = jwtTokenProvider.generateToken(savedUser);
+            // Generate refresh token
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(savedUser);
+            // Set expiration time
+
+            Duration duration = Duration.parse("PT" + refreshTokenExpirationString.toUpperCase());
+
+            Long expirationTimeInSeconds = duration.getSeconds();
+            return new AuthResponse(token, refreshToken.getToken(), expirationTimeInSeconds);
+
         } catch (Exception e) {
             throw new AuthException(ExitCode.REGISTRATION_FAILED,
                     "Registration failed: " + e.getMessage());
@@ -63,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User login(LoginRequest loginRequest) {
+    public Object login(LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -74,13 +95,26 @@ public class AuthServiceImpl implements AuthService {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Find the user and generate token
-            return userRepository.findByEmail(loginRequest.getEmail())
+            // Find the user
+            User user = userRepository.findByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new AuthException(ExitCode.INVALID_CREDENTIALS));
 
+            // Generate access token
+            String accessToken = jwtTokenProvider.generateToken(user);
+
+            // Generate refresh token
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
+
+            // Calculate expiration time in seconds
+            Duration duration = Duration.parse("PT" + refreshTokenExpirationString.toUpperCase());
+            long expiresInSeconds = duration.getSeconds();
+
+            // Create authentication response
+            return new AuthResponse(accessToken, refreshToken.getToken(), expiresInSeconds);
         } catch (AuthenticationException e) {
             throw new AuthException(ExitCode.AUTHENTICATION_FAILED,
                     "Authentication failed: " + e.getMessage());
         }
     }
+
 }

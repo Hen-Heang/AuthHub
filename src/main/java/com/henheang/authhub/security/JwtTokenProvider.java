@@ -1,3 +1,4 @@
+// 5. Update the JwtTokenProvider to handle both access and refresh tokens
 package com.henheang.authhub.security;
 
 import com.henheang.authhub.common.api.ExitCode;
@@ -18,6 +19,8 @@ import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtTokenProvider {
@@ -32,17 +35,7 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication) {
         try {
             UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
-            Instant now = Instant.now();
-            Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
-            Instant expiryDate = now.plus(duration);
-
-            return Jwts.builder()
-                    .setSubject(Long.toString(userPrincipal.getId()))
-                    .setIssuedAt(Date.from(now))
-                    .setExpiration(Date.from(expiryDate))
-                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                    .compact();
+            return generateToken(userPrincipal.getId(), null);
         } catch (Exception e) {
             throw new AuthException(ExitCode.JWT_CONFIGURATION_ERROR,
                     "Failed to generate JWT token: " + e.getMessage());
@@ -51,12 +44,27 @@ public class JwtTokenProvider {
 
     public String generateToken(User user) {
         try {
+            return generateToken(user.getId(), null);
+        } catch (Exception e) {
+            throw new AuthException(ExitCode.JWT_CONFIGURATION_ERROR,
+                    "Failed to generate JWT token: " + e.getMessage());
+        }
+    }
+
+    public String generateToken(Long userId, String tokenType) {
+        try {
+            Map<String, Object> claims = new HashMap<>();
+            if (tokenType != null) {
+                claims.put("token_type", tokenType);
+            }
+
             Instant now = Instant.now();
             Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
             Instant expiryDate = now.plus(duration);
 
             return Jwts.builder()
-                    .setSubject(Long.toString(user.getId()))
+                    .setClaims(claims)
+                    .setSubject(Long.toString(userId))
                     .setIssuedAt(Date.from(now))
                     .setExpiration(Date.from(expiryDate))
                     .signWith(getSigningKey(), SignatureAlgorithm.HS512)
