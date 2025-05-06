@@ -1,4 +1,8 @@
 package com.henheang.authhub.service.impl;
 
-public class AuthServiceImpl {
+import com.henheang.authhub.service.AuthService;
+
+public class AuthServiceImpl implements AuthService {
+
+
 }

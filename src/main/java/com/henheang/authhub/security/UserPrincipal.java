@@ -2,6 +2,8 @@ package com.henheang.authhub.security;
 
 
 import com.henheang.authhub.domain.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +15,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
+    @Getter
     private Long id;
-    private String email;
-    private String password;
-    private String name;
-    private Boolean emailVerified;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final String email;
+    private final String password;
+    private final Boolean emailVerified;
+    private final Collection<? extends GrantedAuthority> authorities;
+    @Setter
     private Map<String, Object> attributes;
 
     public UserPrincipal(Long id, String email, String password, String name,
@@ -26,7 +29,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.name = name;
         this.emailVerified = emailVerified;
         this.authorities = authorities;
     }
@@ -50,10 +52,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override
@@ -89,10 +87,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
-    }
-
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
     }
 
     @Override

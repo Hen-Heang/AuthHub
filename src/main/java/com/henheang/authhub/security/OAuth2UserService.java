@@ -49,6 +49,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                 oAuth2User.getAttributes()
         );
 
+        assert oAuth2UserInfo != null;
         if(!StringUtils.hasText(oAuth2UserInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }

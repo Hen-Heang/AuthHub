@@ -1,4 +1,6 @@
 package com.henheang.authhub.service.impl;
 
-public class UserServiceImpl {
+import com.henheang.authhub.service.UserService;
+
+public class UserServiceImpl implements UserService {
 }

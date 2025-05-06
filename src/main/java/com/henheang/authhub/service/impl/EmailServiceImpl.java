@@ -1,4 +1,6 @@
 package com.henheang.authhub.service.impl;
 
-public class EmailServiceImpl {
+import com.henheang.authhub.service.EmailService;
+
+public class EmailServiceImpl implements EmailService {
 }
