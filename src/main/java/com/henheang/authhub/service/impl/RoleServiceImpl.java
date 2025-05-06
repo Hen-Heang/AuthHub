@@ -1,14 +1,24 @@
 package com.henheang.authhub.service.impl;
 
 import com.henheang.authhub.domain.Role;
+import com.henheang.authhub.repository.RoleRepository;
 import com.henheang.authhub.service.RoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleServiceImpl  implements RoleService {
+@RequiredArgsConstructor
+public class RoleServiceImpl implements RoleService {
+
+    private final RoleRepository roleRepository;
 
     @Override
     public Role getOrCreateRole(String roleName) {
-        return null;
+        return roleRepository.findByName(roleName)
+                .orElseGet(() -> {
+                    Role newRole = new Role();
+                    newRole.setName(roleName);
+                    return roleRepository.save(newRole);
+                });
     }
 }

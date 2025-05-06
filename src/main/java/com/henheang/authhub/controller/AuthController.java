@@ -1,9 +1,12 @@
 package com.henheang.authhub.controller;
 
-
+import com.henheang.authhub.common.api.ApiResponse;
 import com.henheang.authhub.domain.User;
+import com.henheang.authhub.payload.AuthResponse;
 import com.henheang.authhub.payload.LoginRequest;
 import com.henheang.authhub.payload.SignUpRequest;
+import com.henheang.authhub.payload.UserResponse;
+import com.henheang.authhub.security.JwtTokenProvider;
 import com.henheang.authhub.service.AuthService;
 import com.henheang.authhub.service.PasswordResetService;
 import jakarta.validation.Valid;
@@ -15,30 +18,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
+public class AuthController extends BaseController {
 
-public class AuthController extends BaseController{
-
-    private AuthService authService;
-    private PasswordResetService passwordResetService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+    private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         User user = authService.login(loginRequest);
-        return ok(user);
+        String token = jwtTokenProvider.generateToken(user);
+        AuthResponse authResponse = new AuthResponse(token);
+        return ResponseEntity.ok(ApiResponse.success(authResponse));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<?> signup(@Valid @RequestBody SignUpRequest signUpRequest) {
         User user = authService.signup(signUpRequest);
-        return ok(user);
+        String token = jwtTokenProvider.generateToken(user);
+        AuthResponse authResponse = new AuthResponse(token);
+        return ResponseEntity.ok(ApiResponse.success(authResponse));
     }
-
-
-
 }

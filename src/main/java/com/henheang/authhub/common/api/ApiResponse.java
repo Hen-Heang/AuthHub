@@ -17,6 +17,7 @@ public class ApiResponse<T> {
     private ApiStatus statusCode;
 
     private T data;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Common common;
 
@@ -29,16 +30,31 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public ApiResponse(ApiStatus statusCode, T data,Common common) {
+    public ApiResponse(ApiStatus statusCode, T data, Common common) {
         this.statusCode = statusCode;
         this.data = data;
         this.common = common;
     }
 
     @Builder
-    public ApiResponse(StatusCode status, T data , Common common) {
+    public ApiResponse(StatusCode status, T data, Common common) {
         this.statusCode = new ApiStatus(status);
         this.data = data;
         this.common = common;
+    }
+
+    public static <T> ApiResponse<T> success(T data) {
+        ApiStatus status = new ApiStatus(ExitCode.SUCCESS.getCode(), ExitCode.SUCCESS.getMessage());
+        return new ApiResponse<>(status, data);
+    }
+
+    public static <T> ApiResponse<T> error(ExitCode exitCode, T data) {
+        ApiStatus status = new ApiStatus(exitCode.getCode(), exitCode.getMessage());
+        return new ApiResponse<>(status, data);
+    }
+
+    public static <T> ApiResponse<T> error(ExitCode exitCode, String customMessage, T data) {
+        ApiStatus status = new ApiStatus(exitCode.getCode(), customMessage);
+        return new ApiResponse<>(status, data);
     }
 }

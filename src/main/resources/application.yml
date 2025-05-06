@@ -26,7 +26,7 @@ spring:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
 jwt:
   expiration: 2h
-  secret: ${JWT_SECRET:secretary}
+  secret: qwertyuiopasdfghjklzxcvbnm123456qwertyuiopasdfghjklzxcvbnm123456
 server:
   port: 8000
 

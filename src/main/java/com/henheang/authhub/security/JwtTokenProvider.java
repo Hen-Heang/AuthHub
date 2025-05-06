@@ -1,8 +1,8 @@
-// Update JwtTokenProvider
 package com.henheang.authhub.security;
 
+import com.henheang.authhub.common.api.ExitCode;
 import com.henheang.authhub.domain.User;
-import com.sun.security.auth.UserPrincipal;
+import com.henheang.authhub.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
-
 
 import java.security.Key;
 import java.time.Duration;
@@ -32,41 +31,57 @@ public class JwtTokenProvider {
     private String jwtExpirationString;
 
     public String generateToken(Authentication authentication) {
-        com.henheang.authhub.security.UserPrincipal userPrincipal = (com.henheang.authhub.security.UserPrincipal) authentication.getPrincipal();
+        try {
+            com.henheang.authhub.security.UserPrincipal userPrincipal =
+                    (com.henheang.authhub.security.UserPrincipal) authentication.getPrincipal();
 
-        Instant now = Instant.now();
-        Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
-        Instant expiryDate = now.plus(duration);
+            Instant now = Instant.now();
+            Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
+            Instant expiryDate = now.plus(duration);
 
-        return Jwts.builder()
-                .setSubject(Long.toString(userPrincipal.getId()))
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(expiryDate))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                .compact();
+            return Jwts.builder()
+                    .setSubject(Long.toString(userPrincipal.getId()))
+                    .setIssuedAt(Date.from(now))
+                    .setExpiration(Date.from(expiryDate))
+                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                    .compact();
+        } catch (Exception e) {
+            throw new AuthException(ExitCode.JWT_CONFIGURATION_ERROR,
+                    "Failed to generate JWT token: " + e.getMessage());
+        }
     }
 
     public String generateToken(User user) {
-        Instant now = Instant.now();
-        Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
-        Instant expiryDate = now.plus(duration);
+        try {
+            Instant now = Instant.now();
+            Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
+            Instant expiryDate = now.plus(duration);
 
-        return Jwts.builder()
-                .setSubject(Long.toString(user.getId()))
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(expiryDate))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                .compact();
+            return Jwts.builder()
+                    .setSubject(Long.toString(user.getId()))
+                    .setIssuedAt(Date.from(now))
+                    .setExpiration(Date.from(expiryDate))
+                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                    .compact();
+        } catch (Exception e) {
+            throw new AuthException(ExitCode.JWT_CONFIGURATION_ERROR,
+                    "Failed to generate JWT token: " + e.getMessage());
+        }
     }
 
     public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        return Long.parseLong(claims.getSubject());
+            return Long.parseLong(claims.getSubject());
+        } catch (Exception e) {
+            throw new AuthException(ExitCode.TOKEN_INVALID,
+                    "Failed to extract user ID from token: " + e.getMessage());
+        }
     }
 
     public boolean validateToken(String authToken) {
@@ -80,7 +95,12 @@ public class JwtTokenProvider {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        try {
+            byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+            return Keys.hmacShaKeyFor(keyBytes);
+        } catch (Exception e) {
+            throw new AuthException(ExitCode.SECURITY_ERROR,
+                    "Invalid JWT secret key: " + e.getMessage());
+        }
     }
 }

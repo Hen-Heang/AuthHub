@@ -20,4 +20,9 @@ public class ApiStatus {
         this.code = statusCode.getCode();
         this.message = statusCode.getMessage();
     }
+
+    public ApiStatus(ExitCode exitCode) {
+        this.code = exitCode.getCode();
+        this.message = exitCode.getMessage();
+    }
 }
