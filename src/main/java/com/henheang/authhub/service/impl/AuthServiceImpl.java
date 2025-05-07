@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(savedUser);
             // Set expiration time
 
-            Duration duration = Duration.parse("PT" + refreshTokenExpirationString.toUpperCase());
+            Duration duration = Duration.parse(refreshTokenExpirationString);
 
             Long expirationTimeInSeconds = duration.getSeconds();
             return new AuthResponse(token, refreshToken.getToken(), expirationTimeInSeconds);
@@ -106,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
             // Calculate expiration time in seconds
-            Duration duration = Duration.parse("PT" + refreshTokenExpirationString.toUpperCase());
+            Duration duration = Duration.parse(refreshTokenExpirationString);
             long expiresInSeconds = duration.getSeconds();
 
             // Create authentication response

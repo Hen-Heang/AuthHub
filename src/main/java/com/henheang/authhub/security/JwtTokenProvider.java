@@ -59,7 +59,7 @@ public class JwtTokenProvider {
             }
 
             Instant now = Instant.now();
-            Duration duration = Duration.parse("PT" + jwtExpirationString.toUpperCase());
+            Duration duration = Duration.parse(jwtExpirationString);
             Instant expiryDate = now.plus(duration);
 
             return Jwts.builder()

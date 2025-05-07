@@ -26,11 +26,11 @@ public class RefreshToken {
     @Column(nullable = false)
     private Instant expiryDate;
 
-    @OneToOne
+    // Using ManyToOne since many refresh tokens can belong to one user
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "revoked", nullable = false)
     private boolean revoked;
-
 }
