@@ -7,7 +7,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class CorsConfig {
@@ -17,8 +17,18 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // Allow all origins for development (you should restrict this in production)
-        config.setAllowedOrigins(Collections.singletonList("*"));
+        // Instead of allowing all origins with "*", specify allowed origins explicitly
+        // For development, we can allow localhost with different ports
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:3000",  // Next.js default
+                "http://localhost:4200",  // Angular default
+                "http://localhost:8080",  // Another common dev port
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:4200",
+                "http://127.0.0.1:8080"
+                // Add your production domains when deploying
+                // "https://yourdomain.com"
+        ));
 
         // Allow common HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
@@ -29,9 +39,9 @@ public class CorsConfig {
                 "Access-Control-Request-Headers"));
 
         // Expose the Authorization header to the frontend
-        config.setExposedHeaders(Collections.singletonList("Authorization"));
+        config.setExposedHeaders(List.of("Authorization"));
 
-        // Allow cookies
+        // Allow cookies - this requires specific origins, not "*"
         config.setAllowCredentials(true);
 
         // How long the preflight request can be cached

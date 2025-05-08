@@ -28,4 +28,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }
+
+    @Override
+    public Object getAllUsers() {
+        // Assuming you want to return a list of users
+
+        return null;
+    }
 }
