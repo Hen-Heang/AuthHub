@@ -2,10 +2,13 @@ package com.henheang.authhub.service.impl;
 
 import com.henheang.authhub.domain.User;
 import com.henheang.authhub.exception.ResourceNotFoundException;
+import com.henheang.authhub.payload.UserResponse;
 import com.henheang.authhub.repository.UserRepository;
 import com.henheang.authhub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +34,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object getAllUsers() {
-        // Assuming you want to return a list of users
+        List<User> userList = userRepository.findAll();
+        return userList.stream()
+                .map(user -> new UserResponse
+                        (user.getId(),
+                                user.getName(),
+                                user.getEmail(),
+                                user.getEmailVerified(),
+                                user.getImageUrl(),
+                                user.getProviderId()
+                        ))
+
+                .toList();
+    }
+
+    @Override
+    public Object updateUser(String id) {
+        User user = userRepository.findById(Long.valueOf(id))
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
         return null;
     }

@@ -14,4 +14,6 @@ public interface UserService {
     User getUserById(Long id);
 
     Object getAllUsers();
+
+    Object updateUser(String id);
 }

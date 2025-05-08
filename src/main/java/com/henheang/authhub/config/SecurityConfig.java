@@ -54,8 +54,8 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/users/**").authenticated()
                         .requestMatchers("/v1/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
-                        // Protected endpoints
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
