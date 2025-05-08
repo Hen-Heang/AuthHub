@@ -6,18 +6,18 @@ import com.henheang.authhub.domain.User;
 import com.henheang.authhub.exception.AuthException;
 import com.henheang.authhub.payload.*;
 import com.henheang.authhub.security.JwtTokenProvider;
+import com.henheang.authhub.security.UserPrincipal;
 import com.henheang.authhub.service.AuthService;
 import com.henheang.authhub.service.PasswordResetService;
 import com.henheang.authhub.service.RefreshTokenService;
+import com.henheang.authhub.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
@@ -30,7 +30,7 @@ public class AuthController extends BaseController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordResetService passwordResetService;
     private final RefreshTokenService refreshTokenService;
-
+    private final UserService userService;
     @Value("${jwt.expiration}")
     private String jwtExpirationString;
 
@@ -76,5 +76,17 @@ public class AuthController extends BaseController {
         return ok();
     }
 
-
+    @GetMapping("/user")
+    public Object getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userService.getUserById(userPrincipal.getId());
+        UserResponse userResponse = new UserResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getEmailVerified(),
+                user.getImageUrl(),
+                user.getProvider() != null ? user.getProvider().toString() : "LOCAL"
+        );
+        return ok(userResponse);
+    }
 }

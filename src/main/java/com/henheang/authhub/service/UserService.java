@@ -10,4 +10,6 @@ public interface UserService {
 
     boolean existsByEmail(@NotBlank(message = "Email is required") @Email(message = "Email should be valid") String email);
     User saveUser(User user);
+
+    User getUserById(Long id);
 }
