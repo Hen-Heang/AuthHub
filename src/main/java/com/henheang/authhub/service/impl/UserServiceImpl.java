@@ -1,21 +1,25 @@
 package com.henheang.authhub.service.impl;
 
+import com.henheang.authhub.domain.RefreshToken;
 import com.henheang.authhub.domain.User;
 import com.henheang.authhub.exception.ResourceNotFoundException;
+import com.henheang.authhub.payload.UpdateUserRequest;
 import com.henheang.authhub.payload.UserResponse;
+import com.henheang.authhub.repository.RefreshTokenRepository;
 import com.henheang.authhub.repository.UserRepository;
 import com.henheang.authhub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
+    private final RefreshTokenRepository refreshTokenRepository;
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
@@ -49,10 +53,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object updateUser(String id) {
-        User user = userRepository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+    public Object updateUser(Long id, UpdateUserRequest updateUserRequest) {
+//        Find user for update
+        User user = userRepository.findById(id).orElseThrow(()
+        -> new ResourceNotFoundException("User", "id", id));
 
-        return null;
+//        Check if name is already in use
+        if (updateUserRequest.getName() != null){
+            Optional<User> existingUser = userRepository.findByName(updateUserRequest.getName());
+
+            if (existingUser.isPresent() && !existingUser.get().getId().equals(user.getId())) {
+                throw new RuntimeException("Name is already in use by another account");
+            }
+            user.setName(updateUserRequest.getName());
+        }
+//        Check if email is already in use
+        if (updateUserRequest.getEmail() != null && !updateUserRequest.getEmail().equals(user.getEmail()) ){
+            Optional<User> existingUser = userRepository.findByEmail(updateUserRequest.getEmail());
+
+            if (existingUser.isPresent() && !existingUser.get().getId().equals(user.getId())) {
+             throw new RuntimeException("Email is already in use by another account");
+            }
+            user.setEmail(updateUserRequest.getEmail());
+
+        }
+        if (updateUserRequest.getImageUrl() != null){
+            user.setImageUrl(updateUserRequest.getImageUrl());
+        }
+        if (updateUserRequest.getEmailVerified() != null){
+            user.setEmailVerified(updateUserRequest.getEmailVerified());
+        }
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+//        Get user for delete
+        User user = getUserById(id);
+        List<RefreshToken> refreshTokens = refreshTokenRepository.findAllByUser(user);
+        refreshTokenRepository.deleteAll(refreshTokens);
+
+        refreshTokenRepository.flush();
+        userRepository.delete(user);
     }
 }

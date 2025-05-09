@@ -1,6 +1,8 @@
 package com.henheang.authhub.service;
 
 import com.henheang.authhub.domain.User;
+import com.henheang.authhub.payload.UpdateUserRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Service;
@@ -15,5 +17,7 @@ public interface UserService {
 
     Object getAllUsers();
 
-    Object updateUser(String id);
+    Object updateUser(Long id, @Valid UpdateUserRequest updateUserRequest);
+
+    void deleteUser(Long id);
 }

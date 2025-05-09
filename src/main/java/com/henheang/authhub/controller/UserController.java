@@ -1,7 +1,12 @@
 package com.henheang.authhub.controller;
 
+import com.henheang.authhub.payload.UpdateUserRequest;
+import com.henheang.authhub.security.UserPrincipal;
 import com.henheang.authhub.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +23,25 @@ public class UserController extends BaseController{
     }
 
     @PatchMapping("/{id}")
-    public Object updateUser(@PathVariable String id){
-        return ok(userService.updateUser(id));
+    public Object updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserRequest updateUserRequest
+
+//            @AuthenticationPrincipal UserPrincipal userPrincipal
+            ){
+//        check if user is updating their own profile or has admin role
+//        if (userPrincipal.getAuthorities().stream().noneMatch(
+//                        a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+//            return ResponseEntity.status(403).body("You can only update your own profile");
+//        }
+
+        return ok(userService.updateUser(id, updateUserRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    public Object deleteUser(
+            @PathVariable Long id){
+        userService.deleteUser(id);
+        return ok();
     }
 }
