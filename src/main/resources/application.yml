@@ -36,6 +36,11 @@ jwt:
     expiration: P7D  # 7 days in ISO-8601 format
   secret: qwertyuiopasdfghjklzxcvbnm123456qwertyuiopasdfghjklzxcvbnm123456qwertyuiopasdfghjklzxcvbnm123456
 
+app:
+  frontend-url: "http://localhost:3000"  # URL for the frontend application
+  reset-password:
+    token-expiration-minutes: 1440 # 24 hours in minutes
+
 server:
   port: 8000
 

@@ -89,4 +89,24 @@ public class AuthController extends BaseController {
         );
         return ok(userResponse);
     }
+
+
+    //    Forgot password
+    @PostMapping("/forgot-password")
+    public Object forgotPassword(@Valid @RequestBody PasswordResetRequest passwordResetRequest) {
+        passwordResetService.createPasswordResetTokenEmail(passwordResetRequest.getEmail());
+        return ok();
+    }
+
+    @GetMapping("/reset-password")
+    public Object resetPassword(@RequestParam("token") String token) {
+       boolean isValidToken = passwordResetService.validatePasswordResetToken(token);
+        return ok(new PasswordResetResponse(isValidToken));
+    }
+
+    @PostMapping("/reset-password")
+    public Object resetPassword(@Valid @RequestBody NewPasswordRequest resetPasswordRequest) {
+        passwordResetService.resetPassword(resetPasswordRequest.getToken(), resetPasswordRequest.getNewPassword());
+        return ok();
+    }
 }
