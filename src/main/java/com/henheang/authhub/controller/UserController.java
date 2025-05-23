@@ -1,12 +1,9 @@
 package com.henheang.authhub.controller;
 
 import com.henheang.authhub.payload.UpdateUserRequest;
-import com.henheang.authhub.security.UserPrincipal;
 import com.henheang.authhub.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
