@@ -88,7 +88,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getIdentifier(),
+                            loginRequest.getEmail(),
                             loginRequest.getPassword()
                     )
             );
@@ -96,7 +96,7 @@ public class AuthServiceImpl implements AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Find the user
-            User user = userRepository.findByEmail(loginRequest.getIdentifier())
+            User user = userRepository.findByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new AuthException(ExitCode.INVALID_CREDENTIALS));
 
             // Generate an access token
