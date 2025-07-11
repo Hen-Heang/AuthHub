@@ -1,6 +1,6 @@
 package com.henheang.authhub.payload;
 
-
+import com.henheang.authhub.validation.ValidIdentifier;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,15 +11,25 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ValidIdentifier
+
 public class SignUpRequest {
+
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
-    private String email;
+    private String email; // Optional
+
+    private String phoneNumber; // Optional
 
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
+
+    // Custom validation method to ensure at least one of email or phone is provided
+    public boolean hasValidIdentifier() {
+        return (email != null && !email.trim().isEmpty()) ||
+                (phoneNumber != null && !phoneNumber.trim().isEmpty());
+    }
 }

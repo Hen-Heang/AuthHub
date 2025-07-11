@@ -8,6 +8,7 @@ import com.henheang.authhub.payload.UserResponse;
 import com.henheang.authhub.repository.RefreshTokenRepository;
 import com.henheang.authhub.repository.UserRepository;
 import com.henheang.authhub.service.UserService;
+import com.henheang.authhub.utils.PhoneNumberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public boolean existsByPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            return false;
+        }
+
+        String cleanPhone = phoneNumber.trim();
+
+        // Check if exists with the provided format
+        if (userRepository.existsByPhoneNumber((cleanPhone))){
+            return true;
+        }
+
+        // Check with normalized format
+        String normalizedPhone = PhoneNumberUtil.normalizePhoneNumber(cleanPhone);
+        return !normalizedPhone.equals(cleanPhone) && userRepository.existsByPhoneNumber(normalizedPhone);
     }
 
     @Override
@@ -44,6 +63,7 @@ public class UserServiceImpl implements UserService {
                         (user.getId(),
                                 user.getName(),
                                 user.getEmail(),
+                                user.getPhoneNumber(),
                                 user.getEmailVerified(),
                                 user.getImageUrl(),
                                 user.getProviderId()

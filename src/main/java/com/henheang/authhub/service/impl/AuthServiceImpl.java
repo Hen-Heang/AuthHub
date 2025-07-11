@@ -88,7 +88,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(),
+                            loginRequest.getIdentifier(),
                             loginRequest.getPassword()
                     )
             );
@@ -96,10 +96,10 @@ public class AuthServiceImpl implements AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Find the user
-            User user = userRepository.findByEmail(loginRequest.getEmail())
+            User user = userRepository.findByEmail(loginRequest.getIdentifier())
                     .orElseThrow(() -> new AuthException(ExitCode.INVALID_CREDENTIALS));
 
-            // Generate access token
+            // Generate an access token
             String accessToken = jwtTokenProvider.generateToken(user);
 
             // Generate refresh token
@@ -109,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
             Duration duration = Duration.parse(refreshTokenExpirationString);
             long expiresInSeconds = duration.getSeconds();
 
-            // Create authentication response
+            // Create an authentication response
             return new AuthResponse(accessToken, refreshToken.getToken(), expiresInSeconds);
         } catch (AuthenticationException e) {
             throw new AuthException(ExitCode.AUTHENTICATION_FAILED,

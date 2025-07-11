@@ -36,16 +36,12 @@ public class AuthController extends BaseController {
 
     @PostMapping("/login")
     public Object login(@Valid @RequestBody LoginRequest loginRequest) {
-//        User user = authService.login(loginRequest);
-//        String token = jwtTokenProvider.generateToken(user);
         AuthResponse authResponse = (AuthResponse) authService.login(loginRequest);
         return ok(authResponse);
     }
 
     @PostMapping("/signup")
     public Object signup(@Valid @RequestBody SignUpRequest signUpRequest) {
-//        User user = authService.signup(signUpRequest);
-//        String token = jwtTokenProvider.generateToken(user);
         AuthResponse authResponse =(AuthResponse) authService.signup(signUpRequest);
         return ok(authResponse);
     }
@@ -83,6 +79,7 @@ public class AuthController extends BaseController {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getPhoneNumber(),
                 user.getEmailVerified(),
                 user.getImageUrl(),
                 user.getProvider() != null ? user.getProvider().toString() : "LOCAL"

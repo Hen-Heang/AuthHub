@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     boolean existsByEmail(@NotBlank(message = "Email is required") @Email(message = "Email should be valid") String email);
+
+    boolean existsByPhoneNumber(@NotBlank(message = "Phone number is required") String phoneNumber);
+
     User saveUser(User user);
 
     User getUserById(Long id);

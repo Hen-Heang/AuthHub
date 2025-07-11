@@ -22,6 +22,8 @@ public class UpdateUserRequest {
 
     private String email;
 
+    private String phoneNumber;
+
     private String imageUrl;
 
     private Boolean emailVerified;
