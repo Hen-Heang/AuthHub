@@ -19,4 +19,6 @@ public class ListTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
 }
