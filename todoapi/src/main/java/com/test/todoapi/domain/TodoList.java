@@ -2,7 +2,6 @@ package com.test.todoapi.domain;
 
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 import lombok.*;
 
 @Getter
@@ -16,7 +15,14 @@ public class TodoList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "list_id")
+    private Long listId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User;
+
+
 
 
 
