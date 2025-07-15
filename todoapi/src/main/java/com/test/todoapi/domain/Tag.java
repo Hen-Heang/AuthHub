@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "tags")
 @Getter
@@ -16,6 +19,18 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "tag_id")
+    private Long tagId;
+
+    @Column(name = "tag_name", nullable = false, unique = true)
+    private String tagName;
+
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ListTag> todos = new HashSet<>();
+
+
 
 }

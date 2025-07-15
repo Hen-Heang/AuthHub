@@ -99,14 +99,11 @@ public enum StatusCode {
     // 403 Forbidden
     FORBIDDEN(40300, "You are not authorized to perform this action", 403),
     ADMIN_REJECT(40301, "Your request is being rejected.", 403),
-    INVOICE_NO_EXIST(40302, "Bill No already exist", 403),
     INVOICE_NO_EXIST_NAME(40303, "Invoice no exist [{0}]", 403),
     IP_ADDRESS_NOT_ALLOWED(40302, "IP address is not allowed", 403),
 
     // 404 Not Found
-    SERVICE_PLAN_ID_NOT_FOUND(40400, "Service Plan id is not found", 404),
     NOT_FOUND(40401, "Not Found", 404),
-    VIRTUAL_ACCOUNT_NOT_FOUND(40402, "Virtual account not found", 404),
     VIRTUAL_ACCOUNT_ALREADY_EXIST(40403, "Virtual account already exist", 404),
     PARENT_ACCOUNT_NOT_FOUND(40403, "Parent account not found", 404),
     PARENT_ACCOUNT_NOT_FOUND_NAME(40404, "Parent account not found [{0}]", 404),
@@ -131,11 +128,6 @@ public enum StatusCode {
     BANK_NOT_FOUND(40422, "Bank not found", 404),
     COMMON_CODE_NOT_FOUND(40423, "Common code not found [{0}]", 404),
     SERVICE_CODE_NOT_FOUNT(40424, "Service code not found", 404),
-    UTILITY_RATE_NOT_FOUNT(40425, "Utility rate not found", 404),
-    SECURITY_KEY_NOT_FOUND(40426, "Security key was not found", 404),
-    SECURITY_CODE_NOT_FOUND(40427, "Security code was not found", 404),
-    ITEM_NOT_FOUND(40428, "Item not found.", 404),
-    ITEM_NOT_FOUND_NAME(40429, "Item Code not found [{0}]", 404),
     USERNAME_EXISTED(40430, "Username is already existed.", 404),
     USAGE_NAME_EXISTED(40431, "Usage name is already existed.", 404),
     BILL_RECURRING_NOT_FOUND(40432, "Bill recurring not found.", 404),
@@ -178,21 +170,10 @@ public enum StatusCode {
     ELECTRICITY_LESS_THAN_PREVIOUS(40447,"Electricity must be greater than previous",404),
     MISSING_CUSTOMER_INFO(40448,"Missing Tenant name or phone",404),
     // 409 Conflict
-    BILLER_EXIST(40900, "Biller already exist", 409),
-    BILLER_ALREADY_SUBSCRIBE(40901, "Biller already subscribe", 409),
+
     USERNAME_EXIST(40902, "Username already exist", 409),
-    GROUP_EXIST(40903, "Group is already exist", 409),
-    FLOOR_EXIST(40904, "Floor is already exist", 409),
-    ROOM_EXIST(40905, "Room is already exist", 409),
-    ACCOUNT_NUMBER(40906, "Parent account is already exist", 409),
-    PARENT_ACCOUNT_IS_ACTIVE(40907, "Parent account is being used", 409),
-    UTILITY_RATE_EXIST(40908, "Utility rate is already exist", 409),
-    SERVICE_TITLE_EXIST(40909, "Service title is already exist", 409),
-    PAYER_EXIST(40910, "Payer is already exist", 409),
-    ITEM_CODE_EXISTED(40911, "Item code is already existed", 409),
-    FLOOR_CANNOT_DELETE(40912, "Floor cannot be deleted", 409),
+
     USER_ID_EXIST(40913, "User id already exist", 409),
-    BILLER_DISABLED(40914, "Biller is disabled", 409),
     USER_ID_DISABLED(40915, "User id is disabled", 409),
     MOBILE_NUMBER_ALREADY_REGISTERED(40916, "Mobile number already registered", 409),
     USER_ID_ALREADY_IN_USE(40917, "User ID already in use", 409),
@@ -211,9 +192,7 @@ public enum StatusCode {
     USER_DISABLED(45301, "Biller account was deactivated. Please contact: 093 815 074", 453),
     CLIENT_NOT_FOUND(45302, "Client is not found", 453),
 
-    // 333 Custom Error
-    AMOUNT_NOT_ZERO(33300, "Amount must be greater than 0", 333),
-
+    // 333 Custom Erro
     // 502 Bad Gateway
     BAD_GATEWAY(50200, "Bad Gateway", 502),
 
