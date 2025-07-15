@@ -18,7 +18,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Instead of allowing all origins with "*", specify allowed origins explicitly
-        // For development, we can allow localhost with different ports
+        // For development; we can allow localhost with different ports
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",  // Next.js default
                 "http://localhost:4200",  // Angular default

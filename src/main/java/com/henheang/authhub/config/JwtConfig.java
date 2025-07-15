@@ -26,7 +26,7 @@ public class JwtConfig {
     public SecretKey jwtSecretKey() {
         try {
             byte[] decodedKey = Base64.getDecoder().decode(secret);
-            // If key is too small for HS512, generate a secure key
+            // If the key is too small for HS512, generate a secure key
             if (decodedKey.length * 8 < 512) {
                 SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
                 this.secret = Base64.getEncoder().encodeToString(key.getEncoded());

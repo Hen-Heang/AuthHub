@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tb_otp_tokens")
-public class OtpToken {
+public class Otp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

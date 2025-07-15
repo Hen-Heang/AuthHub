@@ -65,8 +65,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PasswordResetToken> passwordResetTokens = new HashSet<>();
 
-    public boolean addRole(Role role) {
-        return this.roles.add(role);
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 
     @PrePersist

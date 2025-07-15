@@ -69,7 +69,6 @@ public enum StatusCode {
     PRICE_PLAN_NOT_FOUND(40054,"Price plan not found",400),
     TAX_RAT_CANNOT_BE_NULL(40055,"Tax rate cannot be null",400),
     CODE_PRICE_PLAN_NOT_FOUND(40056,"Code price plan not found",400),
-    PAYMENT_TERM_NOT_FOUND(40057,"Payment term must be 999 days or less",400),
     TEMPLATE_NOT_FOUND(40058, "Template Not Found", 400),
     PAYER__CANNOT_BE_DELETE_DUE_TO_PROCESSING_BILLS(40059, "Payer cannot be deleted due to processing bills", 400),
 

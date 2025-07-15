@@ -23,15 +23,7 @@ public class UserController extends BaseController{
     public Object updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UpdateUserRequest updateUserRequest
-
-//            @AuthenticationPrincipal UserPrincipal userPrincipal
             ){
-//        check if user is updating their own profile or has admin role
-//        if (userPrincipal.getAuthorities().stream().noneMatch(
-//                        a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-//            return ResponseEntity.status(403).body("You can only update your own profile");
-//        }
-
         return ok(userService.updateUser(id, updateUserRequest));
     }
 
