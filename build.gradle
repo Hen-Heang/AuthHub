@@ -23,7 +23,7 @@ subprojects {
 
 
     dependencies {
-        // Keep only what EVERY module needs (if not, move to individual module)
+        implementation project(":security-api")
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.11'
@@ -51,16 +51,31 @@ subprojects {
 }
 
 
-project(':todoapi') {
+// Root build.gradle
+project(':common-api') {
     dependencies {
-        implementation project(':authhub-api')
-        implementation project(':todoapi')
+        // Only shared dependencies that don't depend on other modules
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        // ... other common dependencies
     }
 }
 
-project(':authhub-api') {
+project(':security-api') {
     dependencies {
-        implementation project(':authhub-api')
-        implementation project(':todoapi')
+        implementation project(':common-api')
+        // security-specific dependencies
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+        // ... other security dependencies
     }
 }
+
+project(':todoapi') {
+    dependencies {
+        implementation project(':common-api')
+        implementation project(':security-api')  // Only if todoapi truly needs security-api
+        // todo-specific dependencies
+    }
+}
+

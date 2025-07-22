@@ -1,3 +1,5 @@
 rootProject.name = 'AuthHub'
-include 'authhub-api',
-        'todoapi'
+include 'security-api'
+include 'todoapi'
+include 'common-api'
+
