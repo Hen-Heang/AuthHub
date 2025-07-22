@@ -1,14 +1,15 @@
 package com.henheang.securityapi.service.impl;
 
-import com.henheang.authhub.domain.RefreshToken;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.ResourceNotFoundException;
-import com.henheang.authhub.payload.UpdateUserRequest;
-import com.henheang.authhub.payload.UserResponse;
-import com.henheang.authhub.repository.RefreshTokenRepository;
-import com.henheang.authhub.repository.UserRepository;
+
+import com.henheang.securityapi.domain.RefreshToken;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.ResourceNotFoundException;
+import com.henheang.securityapi.payload.UpdateUserRequest;
+import com.henheang.securityapi.payload.UserResponse;
+import com.henheang.securityapi.repository.RefreshTokenRepository;
+import com.henheang.securityapi.repository.UserRepository;
 import com.henheang.securityapi.service.UserService;
-import com.henheang.authhub.utils.PhoneNumberUtil;
+import com.henheang.securityapi.utils.PhoneNumberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

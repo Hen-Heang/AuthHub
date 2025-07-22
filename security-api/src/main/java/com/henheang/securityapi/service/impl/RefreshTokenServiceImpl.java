@@ -1,10 +1,9 @@
 package com.henheang.securityapi.service.impl;
 
-import com.henheang.authhub.common.api.ExitCode;
-import com.henheang.authhub.domain.RefreshToken;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.AuthException;
-import com.henheang.authhub.repository.RefreshTokenRepository;
+
+import com.henheang.securityapi.domain.RefreshToken;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.repository.RefreshTokenRepository;
 import com.henheang.securityapi.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

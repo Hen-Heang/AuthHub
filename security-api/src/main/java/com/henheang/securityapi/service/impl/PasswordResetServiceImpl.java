@@ -1,11 +1,11 @@
 package com.henheang.securityapi.service.impl;
 
-import com.henheang.authhub.common.api.ExitCode;
-import com.henheang.authhub.domain.PasswordResetToken;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.AuthException;
-import com.henheang.authhub.repository.PasswordResetTokenRepository;
-import com.henheang.authhub.repository.UserRepository;
+
+import com.henheang.securityapi.domain.PasswordResetToken;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.AuthException;
+import com.henheang.securityapi.repository.PasswordResetTokenRepository;
+import com.henheang.securityapi.repository.UserRepository;
 import com.henheang.securityapi.service.EmailService;
 import com.henheang.securityapi.service.PasswordResetService;
 import lombok.RequiredArgsConstructor;

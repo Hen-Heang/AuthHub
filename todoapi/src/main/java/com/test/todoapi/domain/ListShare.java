@@ -1,6 +1,6 @@
 package com.test.todoapi.domain;
 
-import com.henheang.authhub.domain.User;
+import com.henheang.securityapi.domain.User;
 import com.test.todoapi.enums.PermissionLevel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

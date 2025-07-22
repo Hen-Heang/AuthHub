@@ -1,9 +1,10 @@
 package com.test.todoapi.domain;
 
 
+import com.henheang.securityapi.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
-import com.henheang.authhub.domain.User;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

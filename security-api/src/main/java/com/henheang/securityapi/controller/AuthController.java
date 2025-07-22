@@ -1,16 +1,15 @@
 package com.henheang.securityapi.controller;
-
-import com.henheang.authhub.common.api.ApiResponse;
-import com.henheang.authhub.common.api.ExitCode;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.AuthException;
-import com.henheang.authhub.payload.*;
-import com.henheang.authhub.security.JwtTokenProvider;
-import com.henheang.authhub.security.UserPrincipal;
-import com.henheang.authhub.service.AuthService;
-import com.henheang.authhub.service.PasswordResetService;
-import com.henheang.authhub.service.RefreshTokenService;
-import com.henheang.authhub.service.UserService;
+import com.henheang.commonapi.components.common.api.ApiResponse;
+import com.henheang.commonapi.components.common.api.ExitCode;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.AuthException;
+import com.henheang.securityapi.payload.*;
+import com.henheang.securityapi.security.JwtTokenProvider;
+import com.henheang.securityapi.security.UserPrincipal;
+import com.henheang.securityapi.service.AuthService;
+import com.henheang.securityapi.service.PasswordResetService;
+import com.henheang.securityapi.service.RefreshTokenService;
+import com.henheang.securityapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

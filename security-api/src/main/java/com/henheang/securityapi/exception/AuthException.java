@@ -1,6 +1,7 @@
 package com.henheang.securityapi.exception;
 
-import com.henheang.authhub.common.api.ExitCode;
+
+import com.henheang.commonapi.components.common.api.ExitCode;
 import lombok.Getter;
 
 @Getter

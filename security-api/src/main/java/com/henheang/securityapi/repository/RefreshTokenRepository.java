@@ -1,8 +1,9 @@
 // 2. Create a repository for managing refresh tokens
 package com.henheang.securityapi.repository;
 
-import com.henheang.authhub.domain.RefreshToken;
-import com.henheang.authhub.domain.User;
+
+import com.henheang.securityapi.domain.RefreshToken;
+import com.henheang.securityapi.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

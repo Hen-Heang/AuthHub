@@ -1,4 +1,4 @@
-package com.henheang.securityapi.common.api;
+package com.henheang.commonapi.components.common.api;
 
 import lombok.Getter;
 

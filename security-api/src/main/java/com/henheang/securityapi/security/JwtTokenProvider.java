@@ -1,9 +1,8 @@
-// 5. Update the JwtTokenProvider to handle both access and refresh tokens
 package com.henheang.securityapi.security;
 
-import com.henheang.authhub.common.api.ExitCode;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.AuthException;
+import com.henheang.commonapi.components.common.api.ExitCode;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

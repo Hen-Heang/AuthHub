@@ -1,6 +1,6 @@
 package com.test.todoapi.controller;
 
-import com.henheang.authhub.controller.BaseController;
+import com.henheang.securityapi.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

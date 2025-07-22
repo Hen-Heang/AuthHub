@@ -1,7 +1,7 @@
 package com.henheang.securityapi.service;
 
-import com.henheang.authhub.domain.RefreshToken;
-import com.henheang.authhub.domain.User;
+import com.henheang.securityapi.domain.RefreshToken;
+import com.henheang.securityapi.domain.User;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.henheang.securityapi.validation;
 
-import com.henheang.authhub.payload.SignUpRequest;
+import com.henheang.securityapi.payload.SignUpRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -28,8 +28,8 @@ public class ValidIdentifierValidator implements ConstraintValidator<ValidIdenti
             return false;
         }
 
-        // If phone number is provided, validate its format
-        if (hasPhone && !com.henheang.authhub.utils.PhoneNumberUtil.isValidPhoneNumber(signUpRequest.getPhoneNumber())) {
+        // If a phone number is provided, validate its format
+        if (hasPhone && !com.henheang.securityapi.utils.PhoneNumberUtil.isValidPhoneNumber(signUpRequest.getPhoneNumber())) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("Phone number format is invalid")
                     .addPropertyNode("phoneNumber")

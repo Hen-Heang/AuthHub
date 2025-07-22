@@ -1,8 +1,7 @@
 package com.henheang.securityapi.exception;
 
-import com.henheang.authhub.common.api.ApiResponse;
-import com.henheang.authhub.common.api.ApiStatus;
-import com.henheang.authhub.common.api.ExitCode;
+
+import com.henheang.commonapi.components.common.api.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

@@ -1,7 +1,7 @@
 package com.henheang.securityapi.controller;
 
 
-import com.henheang.authhub.service.OtpService;
+import com.henheang.securityapi.service.OtpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

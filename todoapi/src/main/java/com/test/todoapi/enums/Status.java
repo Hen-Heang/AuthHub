@@ -1,5 +1,8 @@
 package com.test.todoapi.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Status {
     PENDING("pending"),
     IN_PROGRESS("in_progress"),
@@ -11,22 +14,14 @@ public enum Status {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
     public String getLabel() {
-        switch (this) {
-            case PENDING:
-                return "Pending";
-            case IN_PROGRESS:
-                return "In Progress";
-            case COMPLETED:
-                return "Completed";
-            case CANCELLED:
-                return "Cancelled";
-            default:
-                return "(no label)";
-        }
+        return switch (this) {
+            case PENDING -> "Pending";
+            case IN_PROGRESS -> "In Progress";
+            case COMPLETED -> "Completed";
+            case CANCELLED -> "Cancelled";
+            default -> "(no label)";
+        };
     }
 
 

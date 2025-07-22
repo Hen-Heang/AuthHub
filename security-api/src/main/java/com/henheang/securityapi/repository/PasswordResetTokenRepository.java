@@ -1,7 +1,8 @@
 package com.henheang.securityapi.repository;
 
-import com.henheang.authhub.domain.PasswordResetToken;
-import com.henheang.authhub.domain.User;
+
+import com.henheang.securityapi.domain.PasswordResetToken;
+import com.henheang.securityapi.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

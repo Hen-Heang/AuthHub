@@ -1,9 +1,10 @@
 package com.henheang.securityapi.security;
 
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.ResourceNotFoundException;
-import com.henheang.authhub.repository.UserRepository;
-import com.henheang.authhub.utils.PhoneNumberUtil;
+
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.ResourceNotFoundException;
+import com.henheang.securityapi.repository.UserRepository;
+import com.henheang.securityapi.utils.PhoneNumberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

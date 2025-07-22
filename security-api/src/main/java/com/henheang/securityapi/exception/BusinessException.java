@@ -1,7 +1,10 @@
 package com.henheang.securityapi.exception;
 
-import com.henheang.authhub.common.api.StatusCode;
 
+import com.henheang.commonapi.components.common.api.StatusCode;
+import lombok.Getter;
+
+@Getter
 public class BusinessException  extends RuntimeException{
     private Object body;
     private final StatusCode errorCode;
@@ -33,11 +36,4 @@ public class BusinessException  extends RuntimeException{
 
     }
 
-    public StatusCode getErrorCode() {
-        return errorCode;
-    }
-
-    public Object getBody() {
-        return body;
-    }
 }

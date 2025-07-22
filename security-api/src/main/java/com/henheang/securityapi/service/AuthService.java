@@ -1,8 +1,7 @@
 package com.henheang.securityapi.service;
 
 
-import com.henheang.authhub.payload.LoginRequest;
-import com.henheang.authhub.payload.SignUpRequest;
+import com.henheang.securityapi.payload.SignUpRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 

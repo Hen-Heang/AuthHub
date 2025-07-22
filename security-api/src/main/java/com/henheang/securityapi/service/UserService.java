@@ -1,7 +1,8 @@
 package com.henheang.securityapi.service;
 
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.payload.UpdateUserRequest;
+
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.payload.UpdateUserRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

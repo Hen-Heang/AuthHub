@@ -1,6 +1,7 @@
 package com.henheang.securityapi.service;
 
-import com.henheang.authhub.domain.Role;
+
+import com.henheang.securityapi.domain.Role;
 import org.springframework.stereotype.Service;
 
 @Service

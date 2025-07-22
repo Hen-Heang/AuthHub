@@ -1,6 +1,6 @@
 package com.henheang.securityapi.payload;
 
-import com.henheang.authhub.validation.ValidIdentifier;
+import com.henheang.securityapi.validation.ValidIdentifier;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -2,10 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
-    id 'war'
-}
-bootWar {
-    enabled = false
 }
 
 bootJar {
@@ -24,6 +20,10 @@ repositories {
 }
 
 dependencies {
+    // Core Spring Boot dependencies (inherited from parent)
+    // No project dependencies to avoid circular references
+
+    // Testing
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -31,4 +31,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
 tasks.register('prepareKotlinBuildScriptModel') {}

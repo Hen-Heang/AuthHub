@@ -1,7 +1,8 @@
 package com.henheang.securityapi.config;
 
 
-import com.henheang.authhub.repository.PasswordResetTokenRepository;
+
+import com.henheang.securityapi.repository.PasswordResetTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -14,35 +14,31 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-
-
     dependencies {
-        implementation project(":security-api")
+        // Common dependencies for ALL modules
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-        implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.11'
-        implementation 'org.hibernate.orm:hibernate-core:6.2.7.Final'
-        implementation 'org.springframework.boot:spring-boot-starter-mail'
-        implementation 'org.springframework.boot:spring-boot-starter-webflux'
-        implementation 'org.springframework.boot:spring-boot-starter-amqp'
-        implementation 'org.apache.commons:commons-lang3:3.12.0'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+        // Spring Boot common dependencies
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-        implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-        implementation 'commons-beanutils:commons-beanutils:1.9.4'
-        implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+        // Database
         runtimeOnly 'org.postgresql:postgresql'
-        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+        // Testing
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.junit.jupiter:junit-jupiter'
     }
 
     tasks.withType(Test).configureEach {
@@ -50,32 +46,52 @@ subprojects {
     }
 }
 
-
-// Root build.gradle
+// Configure common-api module (base module - no dependencies on other modules)
 project(':common-api') {
     dependencies {
-        // Only shared dependencies that don't depend on other modules
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        // ... other common dependencies
+        // Only basic dependencies, no project dependencies
+        implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+        annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+        implementation 'commons-beanutils:commons-beanutils:1.9.4'
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     }
 }
 
+// Configure security-api module
 project(':security-api') {
     dependencies {
+        // Depend on common-api
         implementation project(':common-api')
-        // security-specific dependencies
+
+        // Security specific dependencies
+        implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.11'
+        implementation 'org.springframework.boot:spring-boot-starter-mail'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
         implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+        // JWT
         implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-        // ... other security dependencies
+        implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+        implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+        // Mapping
+        implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+        annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+        implementation 'commons-beanutils:commons-beanutils:1.9.4'
+
+        // Documentation
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     }
 }
 
+// Configure todoapi module
 project(':todoapi') {
     dependencies {
+        // Depend on both common-api and security-api
         implementation project(':common-api')
-        implementation project(':security-api')  // Only if todoapi truly needs security-api
-        // todo-specific dependencies
+        implementation project(':security-api')
     }
 }
-

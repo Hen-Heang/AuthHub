@@ -1,13 +1,12 @@
 package com.henheang.securityapi.security;
 
-import com.henheang.authhub.domain.AuthProvider;
-import com.henheang.authhub.domain.Role;
 
-import com.henheang.authhub.domain.User;
-
-import com.henheang.authhub.exception.OAuth2AuthenticationProcessingException;
-import com.henheang.authhub.repository.RoleRepository;
-import com.henheang.authhub.repository.UserRepository;
+import com.henheang.securityapi.domain.AuthProvider;
+import com.henheang.securityapi.domain.Role;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.OAuth2AuthenticationProcessingException;
+import com.henheang.securityapi.repository.RoleRepository;
+import com.henheang.securityapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;

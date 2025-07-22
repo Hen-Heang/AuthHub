@@ -1,6 +1,7 @@
 package com.henheang.securityapi.repository;
 
-import com.henheang.authhub.domain.Role;
+
+import com.henheang.securityapi.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

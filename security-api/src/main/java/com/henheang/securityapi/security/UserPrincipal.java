@@ -1,7 +1,8 @@
 package com.henheang.securityapi.security;
 
 
-import com.henheang.authhub.domain.User;
+
+import com.henheang.securityapi.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

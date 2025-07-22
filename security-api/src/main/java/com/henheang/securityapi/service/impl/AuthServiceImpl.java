@@ -1,17 +1,15 @@
 package com.henheang.securityapi.service.impl;
 
 
-import com.henheang.authhub.common.api.ExitCode;
-import com.henheang.authhub.domain.AuthProvider;
-import com.henheang.authhub.domain.RefreshToken;
-import com.henheang.authhub.domain.Role;
-import com.henheang.authhub.domain.User;
-import com.henheang.authhub.exception.AuthException;
-import com.henheang.authhub.payload.AuthResponse;
-import com.henheang.authhub.payload.LoginRequest;
-import com.henheang.authhub.payload.SignUpRequest;
-import com.henheang.authhub.repository.UserRepository;
-import com.henheang.authhub.security.JwtTokenProvider;
+import com.henheang.commonapi.components.common.api.ExitCode;
+import com.henheang.securityapi.domain.AuthProvider;
+import com.henheang.securityapi.domain.RefreshToken;
+import com.henheang.securityapi.domain.Role;
+import com.henheang.securityapi.domain.User;
+import com.henheang.securityapi.exception.AuthException;
+import com.henheang.securityapi.payload.SignUpRequest;
+import com.henheang.securityapi.repository.UserRepository;
+import com.henheang.securityapi.security.JwtTokenProvider;
 import com.henheang.securityapi.service.AuthService;
 import com.henheang.securityapi.service.RefreshTokenService;
 import com.henheang.securityapi.service.RoleService;

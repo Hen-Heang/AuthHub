@@ -1,7 +1,8 @@
 package com.henheang.securityapi.service.impl;
 
-import com.henheang.authhub.domain.Role;
-import com.henheang.authhub.repository.RoleRepository;
+
+import com.henheang.securityapi.domain.Role;
+import com.henheang.securityapi.repository.RoleRepository;
 import com.henheang.securityapi.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

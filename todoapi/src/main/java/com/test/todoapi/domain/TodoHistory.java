@@ -1,6 +1,6 @@
 package com.test.todoapi.domain;
 
-import com.henheang.authhub.domain.User;
+import com.henheang.securityapi.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

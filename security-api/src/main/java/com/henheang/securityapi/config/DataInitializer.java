@@ -1,6 +1,6 @@
 package com.henheang.securityapi.config;
 
-import com.henheang.authhub.service.RoleService;
+import com.henheang.securityapi.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

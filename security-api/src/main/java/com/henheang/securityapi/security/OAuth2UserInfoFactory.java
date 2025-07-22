@@ -1,7 +1,5 @@
 package com.henheang.securityapi.security;
 
-import com.henheang.authhub.domain.AuthProvider;
-import com.henheang.authhub.exception.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;
 

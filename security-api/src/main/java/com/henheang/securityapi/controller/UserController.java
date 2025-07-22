@@ -1,7 +1,8 @@
 package com.henheang.securityapi.controller;
 
-import com.henheang.authhub.payload.UpdateUserRequest;
-import com.henheang.authhub.service.UserService;
+
+import com.henheang.securityapi.payload.UpdateUserRequest;
+import com.henheang.securityapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
