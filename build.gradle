@@ -39,6 +39,7 @@ subprojects {
         // Testing
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.junit.jupiter:junit-jupiter'
+
     }
 
     tasks.withType(Test).configureEach {

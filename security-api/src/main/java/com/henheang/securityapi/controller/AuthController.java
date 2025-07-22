@@ -60,7 +60,7 @@ public class AuthController extends BaseController {
                             refreshToken.getToken(),
                             expiresInSeconds
                     );
-                    return ResponseEntity.ok(ApiResponse.success(authResponse));
+                    return ok(authResponse);
                 })
                 .orElseThrow(() -> new AuthException(ExitCode.TOKEN_EXPIRED, "Refresh token is expired. Please login again."));
     }

@@ -1,6 +1,5 @@
 package com.henheang.securityapi.config;
 
-
 import com.henheang.securityapi.security.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,9 +31,6 @@ import java.util.List;
 public class WebSecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
-    private final OAuth2UserService oAuth2UserService;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -58,20 +54,21 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/users/**").authenticated()
                         .requestMatchers("/v1/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
                         .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(endpoint -> endpoint
-                                .baseUri("/api/auth/oauth2/authorize")
-                        )
-                        .redirectionEndpoint(redirection -> redirection
-                                .baseUri("/api/auth/oauth2/callback/*")
-                        )
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(oAuth2UserService)
-                        )
-                        .successHandler(oAuth2AuthenticationSuccessHandler)
-                        .failureHandler(oAuth2AuthenticationFailureHandler)
                 );
+        // Remove OAuth2 configuration for now
+        // .oauth2Login(oauth2 -> oauth2
+        //         .authorizationEndpoint(endpoint -> endpoint
+        //                 .baseUri("/api/auth/oauth2/authorize")
+        //         )
+        //         .redirectionEndpoint(redirection -> redirection
+        //                 .baseUri("/api/auth/oauth2/callback/*")
+        //         )
+        //         .userInfoEndpoint(userInfo -> userInfo
+        //                 .userService(oAuth2UserService)
+        //         )
+        //         .successHandler(oAuth2AuthenticationSuccessHandler)
+        //         .failureHandler(oAuth2AuthenticationFailureHandler)
+        // );
 
         // Add JWT filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
