@@ -1,13 +1,10 @@
 package com.test.todoapi.domain;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SecondaryRow;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "todo_attachment")
-
 public class TodoAttachment {
 
     @Id
@@ -25,7 +21,7 @@ public class TodoAttachment {
     private Long attachmentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "itmed_id", nullable = false)
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
     private TodoItem todoItem;
 
     @Column(name = "file_name", nullable = false)
@@ -37,7 +33,6 @@ public class TodoAttachment {
     @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
-
     @Column(name = "uploaded_at", nullable = false)
     private LocalDateTime uploadedAt;
 
@@ -45,7 +40,4 @@ public class TodoAttachment {
     protected void onCreate() {
         this.uploadedAt = LocalDateTime.now();
     }
-
-
-
 }

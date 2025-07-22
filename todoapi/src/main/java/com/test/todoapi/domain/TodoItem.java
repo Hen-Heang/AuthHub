@@ -1,6 +1,5 @@
 package com.test.todoapi.domain;
 
-
 import com.test.todoapi.enums.Priority;
 import com.test.todoapi.enums.Status;
 import jakarta.persistence.*;
@@ -19,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "todo_item")
-
 public class TodoItem {
 
     @Id
@@ -28,16 +26,14 @@ public class TodoItem {
     private Long itemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "list_id", nullable = false)
+    @JoinColumn(name = "list_id", referencedColumnName = "list_id")
     private TodoList todoList;
-
 
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT", name = "description")
     private String description;
-
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
@@ -56,16 +52,16 @@ public class TodoItem {
     @Column(name = "is_completed", nullable = false)
     private Boolean isCompleted = false;
 
-    @Column(name = "complete_date", nullable = false, updatable = false)
+    @Column(name = "complete_date")
     private LocalDateTime completedDate;
 
     @Column(name = "created_date", nullable = false, updatable = false)
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate;
 
     @Column(name = "updated_date", nullable = false)
-    private LocalDateTime updatedDate = LocalDateTime.now();
+    private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "todoItems", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "todoItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TodoAttachment> todoAttachments = new ArrayList<>();
 
     @OneToMany(mappedBy = "todoItem", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -73,7 +69,6 @@ public class TodoItem {
 
     @OneToMany(mappedBy = "todoItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TodoHistory> todoHistories = new ArrayList<>();
-
 
     @PrePersist
     protected void onCreate() {
@@ -95,10 +90,4 @@ public class TodoItem {
             this.completedDate = null;
         }
     }
-
-
-
-
-
-
 }

@@ -23,8 +23,8 @@ public class ListShare {
     private Long shareId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "list_id", referencedColumnName = "id")
-    private TodoList listId;
+    @JoinColumn(name = "list_id", referencedColumnName = "list_id")
+    private TodoList todoList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -32,15 +32,13 @@ public class ListShare {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "permission_level", nullable = false)
-    private PermissionLevel permissionLevel = PermissionLevel.VIEW; // The default permission level is View
-
+    private PermissionLevel permissionLevel = PermissionLevel.VIEW;
 
     @Column(name = "share_date", nullable = false)
-    private LocalDateTime shareDate; // Date when the list was shared, in ISO 8601 format (e.g., "2023-10-01T12:00:00Z")
+    private LocalDateTime shareDate;
 
     @PrePersist
     protected void onCreate() {
         this.shareDate = LocalDateTime.now();
     }
-
 }

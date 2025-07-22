@@ -35,8 +35,7 @@ jwt:
   secret: ${JWT_SECRET:mySecretKey}
   expiration: PT24H
   refresh-token:
-    jwt:
-      expiration: PT1H
+    expiration: P7D  # Should match the security-api configuration
 
 app:
   frontend-url: http://localhost:3000
