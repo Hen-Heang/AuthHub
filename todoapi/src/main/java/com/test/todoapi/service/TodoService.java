@@ -6,5 +6,5 @@ import jakarta.validation.Valid;
 
 public interface TodoService {
 
-    TodoListResponse createTodoList(@Valid TodoListRequest request);
+    TodoListResponse createTodoList(@Valid TodoListRequest request, Long userId);
 }
