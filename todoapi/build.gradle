@@ -20,14 +20,8 @@ repositories {
 }
 
 dependencies {
-    // Depend on both common-api and security-api
     implementation project(':common-api')
     implementation project(':security-api')
-
-    // Todo-specific dependencies if any
-    // (Most dependencies are inherited from parent)
-
-    // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

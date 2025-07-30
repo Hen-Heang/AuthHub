@@ -48,8 +48,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Allow OPTIONS requests for CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // Public endpoints
                         .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/todo/v1/create").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/users/**").authenticated()
                         .requestMatchers("/v1/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
@@ -85,9 +85,8 @@ public class WebSecurityConfig {
                 "http://localhost:8080",
                 "http://127.0.0.1:3000",
                 "http://127.0.0.1:4200",
-                "http://127.0.0.1:8080"
-                // Add your production domains when deploying
-                // "https://yourdomain.com"
+                "http://127.0.0.1:8080",
+                "https://yourdomain.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept",
