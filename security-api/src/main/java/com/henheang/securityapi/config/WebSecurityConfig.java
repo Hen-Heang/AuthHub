@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                         // Allow OPTIONS requests for CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll()
-//                        .requestMatchers("/api/todo/v1/create").permitAll()
+                        .requestMatchers("/api/todo/v1/create").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/users/**").authenticated()
                         .requestMatchers("/v1/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()

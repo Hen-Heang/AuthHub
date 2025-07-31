@@ -17,8 +17,7 @@ public class TodoController extends BaseController {
 
     @PostMapping("/create")
     public Object createTodoList(@Valid @RequestBody TodoListRequest request) {
-        Long userId = AuthUtils.getCurrentUserId();
-        Object response = todoService.createTodoList(request, userId);
-        return ok(response);
+     todoService.createTodoList(request);
+        return ok();
     }
 }

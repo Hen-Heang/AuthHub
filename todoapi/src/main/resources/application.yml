@@ -27,12 +27,12 @@ spring:
           starttls:
             enable: true
 
-  # Disable OAuth2 auto-configuration
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientAutoConfiguration
+
 jwt:
-  secret: "dGhpc0lzQVNlY3VyZUFuZFN0cm9uZ0p3dFNlY3JldEtleUZvckF1dGhIdWJBcHBsaWNhdGlvbjIwMjU="  # Base64 encoded secret
+  secret: dGhpc0lzQVNlY3VyZUFuZFN0cm9uZ0p3dFNlY3JldEtleUZvckF1dGhIdWJBcHBsaWNhdGlvbjIwMjVXaXRoNjRCeXRlcw==
   expiration: PT24H
   refresh-token:
     expiration: P7D
